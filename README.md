@@ -3,7 +3,8 @@
 First-time walkthrough for encrypting your Cortex tenant with a key **you** create and control.  
 You work in Cortex Gateway and on your computer.
 
-> Styled companion page (local / offline): [`README.html`](./README.html)
+> **Single source of truth:** this `README.md` file.  
+> Optional styled viewer: [`README.html`](./README.html) (renders this Markdown — serve locally with `python3 -m http.server 8765`).
 
 **Start here (Palo Alto Networks):**  
 [Bring your own keys](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys) ·
@@ -59,7 +60,7 @@ flowchart TB
 | --- | --- |
 | [`run-byok.sh`](./run-byok.sh) | Launcher |
 | [`byok-wrap-keys.sh`](./byok-wrap-keys.sh) | Generate / wrap keys |
-| [`README.html`](./README.html) | Styled customer guide |
+| [`README.html`](./README.html) | Viewer that renders this `README.md` (SSOT) |
 | [`.gitignore`](./.gitignore) | Blocks key material from git |
 
 ```bash

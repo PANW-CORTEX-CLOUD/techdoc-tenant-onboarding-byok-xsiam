@@ -4,12 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bring your own keys | Customer guide</title>
+  <!--
+    Content SSOT: README.md
+    This file is a Cortex Docs–styled viewer only. Do not put guide prose here.
+  -->
   <style>
-    /* Visual language aligned with cortex-docs.paloaltonetworks.com (GitBook) */
     :root {
       --bg: #ffffff;
       --bg-subtle: #f7f7f8;
-      --bg-muted: #f0f1f5;
       --border: #e5e5e6;
       --border-strong: #d4d4d8;
       --text: #1c1c24;
@@ -19,9 +21,7 @@
       --link-hover: #3a35a0;
       --brand: #00a452;
       --brand-bright: #49ffa4;
-      --brand-soft: #e8faf0;
       --accent: #7c74de;
-      --accent-soft: #f0f1ff;
       --warning-bg: #fff5ec;
       --warning-border: #fe9a00;
       --warning-text: #5c3b14;
@@ -31,8 +31,6 @@
       --info-bg: #f0f1ff;
       --info-border: #7c74de;
       --info-text: #1c1c24;
-      --code-bg: #f7f7f8;
-      --code-border: #e5e5e6;
       --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
       --mono: "SF Mono", "Menlo", "Consolas", ui-monospace, monospace;
       --radius: 8px;
@@ -51,370 +49,112 @@
     }
     a { color: var(--link); text-decoration: none; }
     a:hover { color: var(--link-hover); text-decoration: underline; }
-
-    /* Top bar — Cortex Docs style */
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      position: sticky; top: 0; z-index: 20;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 0.75rem;
     }
     .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      color: var(--heading);
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      color: var(--heading); font-weight: 700; font-size: 0.95rem; text-decoration: none;
     }
-    .brand:hover { text-decoration: none; color: var(--heading); }
+    .brand:hover { color: var(--heading); text-decoration: none; }
     .brand-mark {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
       background: radial-gradient(circle at 35% 35%, #b8ffe0 0%, var(--brand-bright) 45%, var(--brand) 100%);
       box-shadow: 0 0 0 1px rgba(0, 164, 82, 0.25);
-      flex-shrink: 0;
     }
-    .topbar-meta {
-      margin-left: auto;
-      color: var(--text-muted);
-      font-size: 0.85rem;
+    .topbar-meta { margin-left: auto; color: var(--text-muted); font-size: 0.85rem; }
+    .page { max-width: var(--max); margin: 0 auto; padding: 1.5rem 1.25rem 3.5rem; }
+    .ssot {
+      font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1.25rem;
+      padding: 0.55rem 0.75rem; background: var(--bg-subtle);
+      border: 1px solid var(--border); border-radius: var(--radius);
     }
-
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 3.5rem;
+    .ssot code { font-size: 0.92em; }
+    #content :is(h1, h2, h3) { color: var(--heading); line-height: 1.3; }
+    #content h1 {
+      margin: 0 0 0.75rem; font-size: clamp(1.75rem, 3vw, 2.15rem);
+      letter-spacing: -0.02em; font-weight: 700;
     }
-
-    .crumbs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      align-items: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 1.1rem;
+    #content h2 {
+      margin: 2rem 0 0.85rem; font-size: 1.35rem; font-weight: 700;
+      padding-top: 0.35rem; border-top: 1px solid var(--border);
     }
-    .crumbs a { color: var(--text-muted); }
-    .crumbs span.sep { color: #b0b0b8; }
-
-    h1 {
-      margin: 0 0 0.75rem;
-      font-size: clamp(1.75rem, 3vw, 2.15rem);
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: var(--heading);
-      font-weight: 700;
+    #content h2:first-of-type { border-top: none; padding-top: 0; margin-top: 1.25rem; }
+    #content h3 { margin: 1.15rem 0 0.45rem; font-size: 1.05rem; font-weight: 650; }
+    #content p, #content li { margin: 0.55rem 0; }
+    #content ul, #content ol { padding-left: 1.3rem; }
+    #content blockquote,
+    #content .hint {
+      border: 1px solid var(--border); border-left-width: 4px; border-radius: var(--radius);
+      padding: 0.85rem 1rem; margin: 1rem 0; background: var(--bg-subtle);
     }
-    h2 {
-      margin: 2rem 0 0.85rem;
-      font-size: 1.35rem;
-      line-height: 1.3;
-      color: var(--heading);
-      font-weight: 700;
-      padding-top: 0.25rem;
-      border-top: 1px solid var(--border);
+    #content .hint .label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
     }
-    h2:first-of-type { border-top: none; padding-top: 0; margin-top: 1.5rem; }
-    h3 {
-      margin: 1.1rem 0 0.4rem;
-      font-size: 1.05rem;
-      color: var(--heading);
-      font-weight: 650;
+    #content .hint.info { background: var(--info-bg); border-left-color: var(--info-border); color: var(--info-text); }
+    #content .hint.info .label { color: var(--accent); }
+    #content .hint.success { background: var(--success-bg); border-left-color: var(--success-border); color: var(--success-text); }
+    #content .hint.success .label { color: var(--brand); }
+    #content .hint.warning { background: var(--warning-bg); border-left-color: var(--warning-border); color: var(--warning-text); }
+    #content .hint.warning .label { color: #b65c00; }
+    #content table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 0.85rem 0 1rem; }
+    #content th, #content td {
+      border: 1px solid var(--border); padding: 0.65rem 0.75rem;
+      text-align: left; vertical-align: top;
     }
-    p { margin: 0.65rem 0; }
-    .lede { color: var(--text-muted); font-size: 1.05rem; max-width: 62ch; }
-
-    ul, ol { padding-left: 1.3rem; margin: 0.6rem 0; }
-    li { margin: 0.35rem 0; }
-
-    code, pre { font-family: var(--mono); }
-    code {
-      background: var(--code-bg);
-      border: 1px solid var(--code-border);
-      border-radius: 4px;
-      padding: 0.1rem 0.35rem;
-      font-size: 0.88em;
-      color: #1c1c24;
+    #content th { background: var(--bg-subtle); font-weight: 650; }
+    #content code, #content pre { font-family: var(--mono); }
+    #content code {
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.1rem 0.35rem; font-size: 0.88em; color: #1c1c24;
     }
-    pre {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.95rem 1.05rem;
-      overflow-x: auto;
-      font-size: 0.84rem;
-      line-height: 1.5;
-      color: #1c1c24;
-      margin: 0.85rem 0;
+    #content pre {
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.95rem 1.05rem; overflow-x: auto;
+      font-size: 0.84rem; line-height: 1.5; color: #1c1c24; margin: 0.85rem 0;
     }
-    pre code { background: none; border: none; padding: 0; }
-
-    /* GitBook-style hint boxes */
-    .hint {
-      border: 1px solid var(--border);
-      border-left-width: 4px;
-      border-radius: var(--radius);
-      padding: 0.85rem 1rem;
-      margin: 1rem 0;
-      background: var(--bg-subtle);
+    #content pre code { background: none; border: none; padding: 0; }
+    #content .mermaid-wrap {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; overflow-x: auto; margin: 1rem 0; color: #1c1c24;
     }
-    .hint .label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
+    #content .mermaid-wrap .mermaid { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; }
+    #content .mermaid-wrap svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    #content .mermaid-wrap .nodeLabel,
+    #content .mermaid-wrap .nodeLabel *,
+    #content .mermaid-wrap foreignObject,
+    #content .mermaid-wrap foreignObject div,
+    #content .mermaid-wrap foreignObject span { color: #1c1c24 !important; }
+    #content .mermaid-wrap .edgePath path { stroke: #1c1c24 !important; stroke-width: 1.5px !important; }
+    #content .mermaid-wrap marker path { fill: #1c1c24 !important; stroke: #1c1c24 !important; }
+    #content .task-list-item { list-style: none; margin-left: -1.1rem; }
+    #content .task-list-item input[type="checkbox"] {
+      appearance: none; -webkit-appearance: none;
+      width: 1.1rem; height: 1.1rem; margin: 0 0.55rem 0 0; vertical-align: -0.15rem;
+      border: 1.5px solid var(--border-strong); border-radius: 4px; background: #fff; cursor: pointer;
+      display: inline-grid; place-items: center;
     }
-    .hint.info { background: var(--info-bg); border-left-color: var(--info-border); color: var(--info-text); }
-    .hint.info .label { color: var(--accent); }
-    .hint.success { background: var(--success-bg); border-left-color: var(--success-border); color: var(--success-text); }
-    .hint.success .label { color: var(--brand); }
-    .hint.warning { background: var(--warning-bg); border-left-color: var(--warning-border); color: var(--warning-text); }
-    .hint.warning .label { color: #b65c00; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.92rem;
-      margin: 0.85rem 0 1rem;
+    #content .task-list-item input[type="checkbox"]:checked {
+      background: var(--brand); border-color: var(--brand);
     }
-    th, td {
-      border: 1px solid var(--border);
-      padding: 0.65rem 0.75rem;
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      background: var(--bg-subtle);
-      color: var(--heading);
-      font-weight: 650;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.15rem 0.45rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-subtle);
-      color: var(--text);
-      white-space: nowrap;
-    }
-    .tag-you { background: var(--brand-soft); border-color: #9ae6bf; color: #0d5c32; }
-    .tag-gateway { background: var(--accent-soft); border-color: #c7c8f0; color: #3a35a0; }
-    .tag-upload { background: #eefcf2; border-color: #9ae6bf; color: #0d5c32; }
-
-    .steps { counter-reset: step; list-style: none; padding: 0; margin: 1rem 0 0; }
-    .steps > li {
-      counter-increment: step;
-      position: relative;
-      padding: 1rem 1rem 1rem 3.25rem;
-      margin: 0.75rem 0;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: #ffffff;
-    }
-    .steps > li::before {
-      content: counter(step);
-      position: absolute;
-      left: 0.9rem;
-      top: 1rem;
-      width: 1.7rem;
-      height: 1.7rem;
-      border-radius: 50%;
-      background: var(--heading);
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: grid;
-      place-items: center;
-    }
-    .steps h3 { margin: 0 0 0.35rem; font-size: 1.02rem; }
-    .steps p:last-child { margin-bottom: 0; }
-
-    .mermaid-wrap {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      color: #1c1c24;
-    }
-    .mermaid-wrap .mermaid {
-      background: transparent !important;
-      border: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    .mermaid-wrap svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
-    /* Page text is dark — keep labels dark on light nodes for WCAG contrast */
-    .mermaid-wrap .nodeLabel,
-    .mermaid-wrap .nodeLabel *,
-    .mermaid-wrap foreignObject,
-    .mermaid-wrap foreignObject div,
-    .mermaid-wrap foreignObject span {
-      color: #1c1c24 !important;
-    }
-    .mermaid-wrap .edgePath path { stroke: #1c1c24 !important; stroke-width: 1.5px !important; }
-    .mermaid-wrap marker path { fill: #1c1c24 !important; stroke: #1c1c24 !important; }
-    .mermaid-wrap .node.you rect,
-    .mermaid-wrap .node.you polygon { fill: #e8faf0 !important; stroke: #00a452 !important; stroke-width: 2px !important; }
-    .mermaid-wrap .node.gateway rect,
-    .mermaid-wrap .node.gateway polygon { fill: #f0f1ff !important; stroke: #7c74de !important; stroke-width: 2px !important; }
-    .mermaid-wrap .node.upload rect,
-    .mermaid-wrap .node.upload polygon { fill: #ffffff !important; stroke: #1c1c24 !important; stroke-width: 2px !important; }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-      margin: 0.35rem 0 0.5rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      align-items: center;
-    }
-
-    .checklist {
-      list-style: none;
-      padding: 0;
-      margin: 0.85rem 0 1rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: #ffffff;
-    }
-    .checklist li {
-      margin: 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .checklist li:last-child { border-bottom: none; }
-    .checklist label {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.75rem 0.9rem;
-      cursor: pointer;
-      color: var(--text);
-    }
-    .checklist label:hover { background: var(--bg-subtle); }
-    .checklist input[type="checkbox"] {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 1.15rem;
-      height: 1.15rem;
-      margin: 0.15rem 0 0;
-      flex-shrink: 0;
-      border: 1.5px solid var(--border-strong);
-      border-radius: 4px;
-      background: #ffffff;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-    }
-    .checklist input[type="checkbox"]:hover { border-color: var(--brand); }
-    .checklist input[type="checkbox"]:checked {
-      background: var(--brand);
-      border-color: var(--brand);
-    }
-    .checklist input[type="checkbox"]:checked::after {
-      content: "";
-      width: 0.28rem;
-      height: 0.55rem;
-      border: solid #ffffff;
-      border-width: 0 2px 2px 0;
+    #content .task-list-item input[type="checkbox"]:checked::after {
+      content: ""; width: 0.25rem; height: 0.5rem; border: solid #fff; border-width: 0 2px 2px 0;
       transform: rotate(45deg) translate(-0.5px, -1px);
     }
-    .checklist input[type="checkbox"]:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
+    #content .task-list-item:has(input:checked) { color: var(--text-muted); text-decoration: line-through; }
+    .status-error {
+      border: 1px solid #f2c9c9; background: #fff5f5; color: #7a1f1f;
+      border-radius: var(--radius); padding: 1rem; margin: 1rem 0;
     }
-    .checklist label:has(input:checked) .item-text {
-      color: var(--text-muted);
-      text-decoration: line-through;
-    }
-    .checklist .item-text { line-height: 1.45; }
-    .checklist-actions {
-      display: flex;
-      gap: 0.65rem;
-      margin: 0.35rem 0 0.75rem;
-    }
-    .checklist-actions button {
-      font: inherit;
-      font-size: 0.85rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text);
-      cursor: pointer;
-    }
-    .checklist-actions button:hover { background: var(--bg-subtle); }
-
+    .status-error code { background: #ffe8e8; }
     footer {
-      margin-top: 2.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border);
+      color: var(--text-muted); font-size: 0.85rem;
     }
   </style>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: "base",
-      securityLevel: "loose",
-      flowchart: { htmlLabels: true, padding: 16, nodeSpacing: 40, rankSpacing: 48, useMaxWidth: true },
-      themeVariables: {
-        fontFamily: "Inter, Segoe UI, system-ui, sans-serif",
-        fontSize: "14px",
-        primaryColor: "#e8faf0",
-        primaryTextColor: "#1c1c24",
-        primaryBorderColor: "#00a452",
-        lineColor: "#1c1c24",
-        textColor: "#1c1c24",
-        nodeTextColor: "#1c1c24",
-        mainBkg: "#ffffff",
-        clusterBkg: "#f7f7f8",
-        clusterBorder: "#e5e5e6",
-        edgeLabelBackground: "#ffffff"
-      }
-    });
-    await mermaid.run({ querySelector: ".mermaid" });
-
-    // Interactive checklist with local persistence
-    const STORAGE_KEY = "byok-checklist-v1";
-    const boxes = [...document.querySelectorAll("#byok-checklist input[type=checkbox]")];
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      boxes.forEach((box) => {
-        box.checked = !!saved[box.dataset.key];
-      });
-    } catch (_) { /* ignore */ }
-    const persist = () => {
-      const state = {};
-      boxes.forEach((box) => { state[box.dataset.key] = box.checked; });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    };
-    boxes.forEach((box) => box.addEventListener("change", persist));
-    document.getElementById("checklist-clear")?.addEventListener("click", () => {
-      boxes.forEach((box) => { box.checked = false; });
-      persist();
-    });
-  </script>
 </head>
 <body>
   <header class="topbar">
@@ -422,294 +162,153 @@
       <span class="brand-mark" aria-hidden="true"></span>
       Cortex Docs
     </a>
-    <div class="topbar-meta">Customer guide · BYOK</div>
+    <div class="topbar-meta">Rendered from <code>README.md</code></div>
   </header>
 
   <main class="page">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="https://cortex-docs.paloaltonetworks.com/">Guides</a>
-      <span class="sep">›</span>
-      <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Bring your own keys</a>
-      <span class="sep">›</span>
-      <span>Customer walkthrough</span>
-    </nav>
-
-    <h1>Bring your own keys</h1>
-    <p class="lede">
-      A first-time walkthrough for encrypting your Cortex tenant with a key you create and control.
-      You will work in Cortex Gateway and on your computer.
+    <p class="ssot">
+      Single source of truth: <a href="./README.md"><code>README.md</code></a>.
+      This page only styles and renders that file.
     </p>
-    <p>
-      <strong>Palo Alto Networks docs:</strong>
-      <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Bring your own keys</a>
-      ·
-      <a href="https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant">Activate Cortex XSIAM tenant</a>
-      ·
-      <a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist">Onboarding checklist</a>
-    </p>
-
-    <h2>What this means for you</h2>
-    <p>
-      With BYOK, Cortex still hosts your tenant — but the master encryption key comes from you.
-      Your tenant needs encryption for two areas: the <strong>Data lake</strong> and other <strong>Services</strong>.
-      You can use one key for both, or create two different keys. Most customers start with one shared key.
-    </p>
-
-    <div class="hint info">
-      <div class="label">Note</div>
-      You create the secret <strong>32-byte target key</strong>. Cortex Gateway gives you temporary
-      <strong>wrapping keys</strong> (<code>.pem</code> files). Wrapping keys only protect your secret during upload —
-      they are not your BYOK key.
-      See
-      <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Bring your own keys — architecture &amp; setup</a>.
-    </div>
-
-    <table>
-      <thead><tr><th>Item</th><th>Who</th><th>What to do</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Target key (<code>targetkey</code>)</td>
-          <td><span class="tag tag-you">You</span></td>
-          <td>Create once, store safely. Never upload this file unwrapped.</td>
-        </tr>
-        <tr>
-          <td>Wrapping keys (<code>.pem</code>)</td>
-          <td><span class="tag tag-gateway">Gateway</span></td>
-          <td>Download for Data lake and Services. Valid up to 3 days.</td>
-        </tr>
-        <tr>
-          <td>Wrapped key files</td>
-          <td><span class="tag tag-upload">Upload</span></td>
-          <td>Created by the helper script. Upload these in Gateway.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>Process overview</h2>
-    <div class="legend">
-      <span><span class="tag tag-you">You</span> secret key</span>
-      <span><span class="tag tag-gateway">Gateway</span> downloads</span>
-      <span><span class="tag tag-upload">Upload</span> wrapped files</span>
-    </div>
-    <div class="mermaid-wrap">
-      <pre class="mermaid">
-flowchart TB
-  A["Start in Cortex Gateway<br/>choose BYOK"]
-  B["Create your 32-byte<br/>target key"]
-  C1["Download Data lake<br/>wrapping key"]
-  C2["Download Services<br/>wrapping key"]
-  D1["Wrap for Data lake"]
-  D2["Wrap for Services"]
-  E["Upload both files<br/>Complete Activation"]
-  A --> B
-  B --> D1
-  B --> D2
-  C1 --> D1
-  C2 --> D2
-  D1 --> E
-  D2 --> E
-  classDef you fill:#e8faf0,stroke:#00a452,stroke-width:2px,color:#1c1c24
-  classDef gateway fill:#f0f1ff,stroke:#7c74de,stroke-width:2px,color:#1c1c24
-  classDef upload fill:#ffffff,stroke:#1c1c24,stroke-width:2px,color:#1c1c24
-  class B you
-  class A,C1,C2 gateway
-  class D1,D2,E upload
-      </pre>
-    </div>
-
-    <h2>Step-by-step</h2>
-    <ol class="steps">
-      <li>
-        <h3>Start BYOK in Cortex Gateway</h3>
-        <p>
-          Sign in to Cortex Gateway and activate your tenant.
-          Under <strong>Advanced</strong>, select <strong>BYOK (Bring Your Own Keys)</strong>,
-          then <strong>Create Tenant and Set Up Keys</strong>.
-        </p>
-        <p>
-          Initialization can take a few minutes. If you pause, continue later with
-          <strong>Set Up Encryption Keys</strong> next to the tenant.
-        </p>
-        <p>
-          <strong>Learn more:</strong>
-          <a href="https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant">Activate Cortex XSIAM tenant</a>
-          ·
-          <a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Activate-Cortex-XSIAM">Activate Cortex XSIAM (Admin Guide)</a>
-          ·
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/cortex-xsiam-supported-regions">Supported regions</a>
-          ·
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Set up new tenant with BYOK</a>
-        </p>
-      </li>
-      <li>
-        <h3>Create your 32-byte target key</h3>
-        <p>On your computer, generate the secret key:</p>
-<pre><code>./run-byok.sh generate targetkey</code></pre>
-        <p>
-          In Gateway, select <strong>I have a 32-byte symmetric encryption key ready</strong> and continue.
-        </p>
-        <div class="hint warning">
-          <div class="label">Caution</div>
-          Treat <code>targetkey</code> like a root secret. Back it up offline.
-          Do not email it, store it in git, or upload it unwrapped.
-        </div>
-        <p>
-          <strong>Learn more:</strong>
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">BYOK setup — Generate Key</a>
-        </p>
-      </li>
-      <li>
-        <h3>Download wrapping keys</h3>
-        <p>
-          On the <strong>Wrap &amp; Upload</strong> screen, repeat for <strong>Data lake</strong> and <strong>Services</strong>:
-          choose import method <code>RSA_OAEP_3072_SHA256_AES_256</code> (default), then download the wrapping <code>.pem</code>.
-        </p>
-        <div class="hint success">
-          <div class="label">Note</div>
-          Wrapping keys expire after three days. If they expire, download new ones before wrapping.
-        </div>
-        <p>
-          <strong>Learn more:</strong>
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Wrap &amp; Upload — import methods</a>
-          ·
-          <a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Bring-your-own-keys">Administrator Guide</a>
-        </p>
-      </li>
-      <li>
-        <h3>Wrap your target key</h3>
-        <p>Place both <code>.pem</code> files next to the script, then run:</p>
-<pre><code>./run-byok.sh wrap-both \
-  datalake_wrapping_key.pem \
-  services_wrapping_key.pem \
-  targetkey \
-  ./out</code></pre>
-        <p>
-          Output: <code>out/datalakewrappedkey</code> and <code>out/serviceswrappedkey</code>.
-        </p>
-        <p>
-          The default import method needs
-          <a href="https://docs.cloud.google.com/kms/docs/configuring-openssl-for-manual-key-wrapping">patched OpenSSL</a>
-          at <code>$HOME/local/bin/openssl.sh</code>
-          (procedure linked from Palo Alto Networks BYOK docs).
-        </p>
-        <p>
-          <strong>Learn more:</strong>
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">OpenSSL wrap procedure</a>
-          ·
-          <a href="https://docs.cloud.google.com/kms/docs/wrapping-a-key">Wrapping a key using OpenSSL</a>
-        </p>
-      </li>
-      <li>
-        <h3>Upload and complete activation</h3>
-        <p>
-          Upload the Data lake wrapped file, then the Services wrapped file.
-          Click <strong>Complete Activation</strong>.
-          Your key becomes the primary encryption key for newly generated tenant data.
-        </p>
-        <p>
-          <strong>Learn more:</strong>
-          <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Complete Activation / rotate / disable</a>
-          ·
-          <a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist">Onboarding checklist</a>
-        </p>
-      </li>
-    </ol>
-
-    <h2>Checklist</h2>
-    <div class="checklist-actions">
-      <button type="button" id="checklist-clear">Clear all</button>
-    </div>
-    <ul class="checklist" id="byok-checklist">
-      <li>
-        <label>
-          <input type="checkbox" data-key="byok-selected" />
-          <span class="item-text">BYOK selected during tenant activation</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="targetkey-created" />
-          <span class="item-text">32-byte <code>targetkey</code> created and stored securely</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="datalake-pem" />
-          <span class="item-text">Data lake wrapping <code>.pem</code> downloaded</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="services-pem" />
-          <span class="item-text">Services wrapping <code>.pem</code> downloaded</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="wrap-both" />
-          <span class="item-text"><code>wrap-both</code> completed successfully</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="uploaded" />
-          <span class="item-text">Both wrapped files uploaded</span>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="activation" />
-          <span class="item-text">Complete Activation selected</span>
-        </label>
-      </li>
-    </ul>
-
-    <h2>Official documentation</h2>
-    <p>Palo Alto Networks references used in this guide:</p>
-    <table>
-      <thead><tr><th>Topic</th><th>Documentation</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>BYOK overview, wrap, rotate, disable</td>
-          <td><a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Bring your own keys</a></td>
-        </tr>
-        <tr>
-          <td>BYOK (Administrator Guide)</td>
-          <td><a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Bring-your-own-keys">Bring your own keys — Cortex XSIAM 3.x</a></td>
-        </tr>
-        <tr>
-          <td>Tenant activation &amp; encryption method</td>
-          <td><a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Activate-Cortex-XSIAM">Activate Cortex XSIAM</a></td>
-        </tr>
-        <tr>
-          <td>Activate XSIAM from Gateway</td>
-          <td><a href="https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant">Activate Cortex XSIAM tenant</a></td>
-        </tr>
-        <tr>
-          <td>Gateway activation hub</td>
-          <td><a href="https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant">Activate a tenant</a></td>
-        </tr>
-        <tr>
-          <td>Deployment checklist (includes BYOK)</td>
-          <td><a href="https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist">Cortex XSIAM onboarding checklist</a></td>
-        </tr>
-        <tr>
-          <td>Hosting regions</td>
-          <td><a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/cortex-xsiam-supported-regions">Cortex XSIAM supported regions</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="hint info">
-      <div class="label">Note</div>
-      File names such as <code>targetkey</code> and <code>datalake_wrapping_key.pem</code> are helper-script conventions.
-      Use the wrapping files you download from Gateway, even if their names differ.
-      GitHub README: <a href="./README.md">README.md</a>.
-    </div>
-
-    <footer>
-      Helper commands: <code>./run-byok.sh generate</code> · <code>./run-byok.sh wrap-both …</code>
-      · GitHub README: <a href="./README.md">README.md</a>
-    </footer>
+    <article id="content">Loading <code>README.md</code>…</article>
+    <footer>Viewer only — edit <code>README.md</code> to change content.</footer>
   </main>
+
+  <script type="module">
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.esm.js";
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    const MD_URL = new URL("./README.md", window.location.href).href;
+    const content = document.getElementById("content");
+    const STORAGE_KEY = "byok-checklist-v1";
+
+    function convertGitHubAlerts(md) {
+      return md.replace(
+        /^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*\n((?:>.*(?:\n|$))+)/gim,
+        (_, type, body) => {
+          const text = body
+            .split("\n")
+            .map((line) => line.replace(/^>\s?/, ""))
+            .join("\n")
+            .trim();
+          const kind = String(type).toUpperCase();
+          const cls = kind === "CAUTION" || kind === "WARNING" ? "warning"
+            : kind === "TIP" ? "success"
+            : "info";
+          const label = kind === "CAUTION" ? "Caution" : kind === "WARNING" ? "Warning"
+            : kind === "TIP" ? "Tip" : kind === "IMPORTANT" ? "Important" : "Note";
+          return `\n\n<div class="hint ${cls}" markdown="1">\n<div class="label">${label}</div>\n\n${text}\n\n</div>\n\n`;
+        }
+      );
+    }
+
+    // Hide the self-referential HTML companion blurb inside the HTML viewer
+    function stripViewerSelfRef(md) {
+      return md
+        .replace(/^>\s*Styled companion page.*$/gim, "")
+        .replace(
+          /^\|\s*`?\[`?README\.html`?\][^|]*\|\s*Styled customer guide\s*\|\s*$/gim,
+          "| [`README.html`](./README.html) | Viewer that renders this Markdown file |"
+        );
+    }
+
+    marked.setOptions({ gfm: true, breaks: false });
+
+    // Marked v15+: code renderer receives a token object
+    marked.use({
+      renderer: {
+        code({ text, lang }) {
+          const language = (lang || "").trim().split(/\s+/)[0];
+          if (language === "mermaid") {
+            const escaped = text
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;");
+            return `<div class="mermaid-wrap"><pre class="mermaid">${escaped}</pre></div>\n`;
+          }
+          return false; // fall back to default renderer
+        }
+      }
+    });
+
+    async function loadMarkdown() {
+      const res = await fetch(MD_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} loading README.md`);
+      return res.text();
+    }
+
+    function enhanceTaskLists(root) {
+      const boxes = [...root.querySelectorAll(".task-list-item input[type=checkbox], li input[type=checkbox]")];
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) {}
+      boxes.forEach((box, i) => {
+        const li = box.closest("li");
+        if (li) li.classList.add("task-list-item");
+        box.disabled = false;
+        const key = box.dataset.key || `item-${i}`;
+        box.dataset.key = key;
+        box.checked = !!saved[key];
+        box.addEventListener("change", () => {
+          const state = {};
+          boxes.forEach((b) => { state[b.dataset.key] = b.checked; });
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        });
+      });
+    }
+
+    function promoteMermaidFallbacks(root) {
+      root.querySelectorAll("pre > code.language-mermaid").forEach((code) => {
+        const wrap = document.createElement("div");
+        wrap.className = "mermaid-wrap";
+        const pre = document.createElement("pre");
+        pre.className = "mermaid";
+        pre.textContent = code.textContent;
+        wrap.appendChild(pre);
+        code.parentElement.replaceWith(wrap);
+      });
+    }
+
+    try {
+      let md = await loadMarkdown();
+      md = stripViewerSelfRef(md);
+      md = convertGitHubAlerts(md);
+      content.innerHTML = marked.parse(md);
+      promoteMermaidFallbacks(content);
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "base",
+        securityLevel: "loose",
+        flowchart: { htmlLabels: true, padding: 16, nodeSpacing: 40, rankSpacing: 48, useMaxWidth: true },
+        themeVariables: {
+          fontFamily: "Inter, Segoe UI, system-ui, sans-serif",
+          fontSize: "14px",
+          primaryColor: "#e8faf0",
+          primaryTextColor: "#1c1c24",
+          primaryBorderColor: "#00a452",
+          lineColor: "#1c1c24",
+          textColor: "#1c1c24",
+          nodeTextColor: "#1c1c24",
+          mainBkg: "#ffffff",
+          clusterBkg: "#f7f7f8",
+          clusterBorder: "#e5e5e6",
+          edgeLabelBackground: "#ffffff"
+        }
+      });
+      await mermaid.run({ querySelector: "#content .mermaid" });
+      enhanceTaskLists(content);
+    } catch (err) {
+      content.innerHTML = `
+        <div class="status-error">
+          <p><strong>Could not load <code>README.md</code></strong> (SSOT).</p>
+          <p>${String(err.message || err)}</p>
+          <p>Browsers block fetching local files via <code>file://</code>. Serve the folder instead:</p>
+          <pre><code>cd tenant-onboarding-byok-xsiam
+python3 -m http.server 8765
+# open http://localhost:8765/README.html</code></pre>
+          <p>Or read the source directly: <a href="./README.md">README.md</a></p>
+        </div>`;
+    }
+  </script>
 </body>
 </html>
