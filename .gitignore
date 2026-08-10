@@ -1,0 +1,13 @@
+# Customer / Gateway key material — never commit
+targetkey
+**/targetkey
+*_wrapping_key.pem
+*.pem
+*wrappedkey
+*wrapped.key
+byok-output/
+out/
+
+# Temp / OS
+.DS_Store
+*.tmp

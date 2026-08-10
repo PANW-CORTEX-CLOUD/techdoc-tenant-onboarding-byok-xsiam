@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bring Your Own Key (BYOK) — Customer Guide</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #334155;
+      --text: #e2e8f0;
+      --muted: #cbd5e1;
+      --accent: #f97316;
+      --link: #38bdf8;
+      --code: #0b1220;
+      --font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 2rem 1.25rem 3.5rem; }
+    h1 { font-size: 1.75rem; margin: 0 0 0.5rem; line-height: 1.25; }
+    h2 {
+      font-size: 1.15rem;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    p { margin: 0.55rem 0; }
+    .lede { color: var(--muted); font-size: 1.05rem; max-width: 62ch; margin: 0 0 0.25rem; }
+    .muted { color: var(--muted); }
+    a { color: var(--link); }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.2rem;
+      margin: 1.1rem 0;
+    }
+    code, pre { font-family: var(--mono); }
+    code {
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.05rem 0.3rem;
+      font-size: 0.88em;
+      color: #f8fafc;
+    }
+    pre {
+      background: var(--code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+    }
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: #2a1a0f;
+      color: #ffedd5;
+      padding: 0.8rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.75rem 0;
+    }
+    .callout strong { color: #fff7ed; display: block; margin-bottom: 0.2rem; }
+    .callout.warn {
+      border-left-color: #eab308;
+      background: #2a2410;
+      color: #fef3c7;
+    }
+    .callout.warn strong { color: #fde68a; }
+    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0.5rem 0 0; }
+    .steps > li {
+      counter-increment: step;
+      position: relative;
+      padding: 0.95rem 0.95rem 0.95rem 3.1rem;
+      margin: 0.65rem 0;
+      background: #243044;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #e2e8f0;
+    }
+    .steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0.85rem;
+      top: 0.95rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #111;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: grid;
+      place-items: center;
+    }
+    .steps h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      color: #f8fafc;
+    }
+    .mermaid-wrap {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+      color: #0f172a;
+    }
+    .mermaid-wrap .mermaid {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .mermaid-wrap svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .mermaid-wrap .nodeLabel,
+    .mermaid-wrap .nodeLabel *,
+    .mermaid-wrap foreignObject,
+    .mermaid-wrap foreignObject div,
+    .mermaid-wrap foreignObject span {
+      color: #ffffff !important;
+    }
+    .mermaid-wrap .edgePath path { stroke: #0f172a !important; stroke-width: 1.75px !important; }
+    .mermaid-wrap marker path { fill: #0f172a !important; stroke: #0f172a !important; }
+    .mermaid-wrap .node.customer rect,
+    .mermaid-wrap .node.customer polygon { fill: #9a3412 !important; stroke: #fb923c !important; stroke-width: 2px !important; }
+    .mermaid-wrap .node.gateway rect,
+    .mermaid-wrap .node.gateway polygon { fill: #1e3a8a !important; stroke: #60a5fa !important; stroke-width: 2px !important; }
+    .mermaid-wrap .node.upload rect,
+    .mermaid-wrap .node.upload polygon { fill: #14532d !important; stroke: #4ade80 !important; stroke-width: 2px !important; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-top: 0.6rem; }
+    th, td { border: 1px solid var(--border); padding: 0.5rem 0.65rem; text-align: left; color: #e2e8f0; vertical-align: top; }
+    th { background: #243044; color: #f8fafc; }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 4px;
+    }
+    .tag-customer { background: #9a3412; color: #ffedd5; }
+    .tag-gateway { background: #1e3a8a; color: #dbeafe; }
+    .tag-upload { background: #14532d; color: #dcfce7; }
+    .legend { display: flex; flex-wrap: wrap; gap: 0.85rem; margin: 0.35rem 0 0.75rem; font-size: 0.88rem; color: var(--muted); align-items: center; }
+    footer { margin-top: 1.5rem; color: var(--muted); font-size: 0.85rem; }
+  </style>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      securityLevel: "loose",
+      flowchart: { htmlLabels: true, padding: 16, nodeSpacing: 40, rankSpacing: 48, useMaxWidth: true },
+      themeVariables: {
+        fontFamily: "IBM Plex Sans, Segoe UI, system-ui, sans-serif",
+        fontSize: "15px",
+        primaryColor: "#0f172a",
+        primaryTextColor: "#ffffff",
+        primaryBorderColor: "#f97316",
+        lineColor: "#0f172a",
+        textColor: "#ffffff",
+        nodeTextColor: "#ffffff"
+      }
+    });
+    await mermaid.run({ querySelector: ".mermaid" });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Bring Your Own Key (BYOK) — getting started</h1>
+    <p class="lede">
+      This guide walks you through encrypting your Cortex tenant with a key that <strong style="color:#ffedd5">you</strong> create and control.
+      You will do part of the work in Cortex Gateway, and part on your own computer.
+    </p>
+
+    <section>
+      <h2>In plain words</h2>
+      <p>
+        With BYOK, Cortex still runs your tenant in Palo Alto Networks’ cloud — but the master encryption key
+        (your <em>target key</em>) comes from you, not from the default platform key.
+      </p>
+      <p>
+        Your tenant needs encryption for two areas: the <strong>Data lake</strong> and other <strong>Services</strong>.
+        You can use <strong>one</strong> key for both areas, or create <strong>two</strong> different keys.
+        Most customers start with one key for both.
+      </p>
+      <div class="callout">
+        <strong>What you create vs what Cortex gives you</strong>
+        You create the secret 32-byte key. Cortex Gateway gives you temporary <em>wrapping keys</em>
+        (public files ending in <code>.pem</code>). Those wrapping keys only protect your secret while you upload it —
+        they are not your BYOK key.
+      </div>
+      <table>
+        <thead><tr><th>Item</th><th>Who</th><th>What to do with it</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Your target key (<code>targetkey</code>)</td>
+            <td><span class="tag tag-customer">You</span></td>
+            <td>Create it once. Store it safely. Never upload this file as-is.</td>
+          </tr>
+          <tr>
+            <td>Wrapping keys (<code>.pem</code>)</td>
+            <td><span class="tag tag-gateway">Gateway</span></td>
+            <td>Download from the wizard (Data lake + Services). Valid for up to 3 days.</td>
+          </tr>
+          <tr>
+            <td>Wrapped key files</td>
+            <td><span class="tag tag-upload">Upload</span></td>
+            <td>Created by the wrap script. Upload these in Gateway to finish.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Big picture</h2>
+      <div class="legend">
+        <span><span class="tag tag-customer">You</span> your secret key</span>
+        <span><span class="tag tag-gateway">Gateway</span> downloads &amp; activation</span>
+        <span><span class="tag tag-upload">Upload</span> wrapped files</span>
+      </div>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TB
+  A["Start in Cortex Gateway<br/>choose BYOK for the tenant"]
+  B["Create your 32-byte secret key<br/>on your computer"]
+  C1["Download Data lake wrapping key"]
+  C2["Download Services wrapping key"]
+  D1["Wrap your secret<br/>for Data lake"]
+  D2["Wrap your secret<br/>for Services"]
+  E["Upload both wrapped files<br/>Complete Activation"]
+  A --> B
+  B --> D1
+  B --> D2
+  C1 --> D1
+  C2 --> D2
+  D1 --> E
+  D2 --> E
+  classDef customer fill:#9a3412,stroke:#fb923c,stroke-width:2px,color:#ffffff
+  classDef gateway fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#ffffff
+  classDef upload fill:#14532d,stroke:#4ade80,stroke-width:2px,color:#ffffff
+  class B customer
+  class A,C1,C2 gateway
+  class D1,D2,E upload
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Step-by-step</h2>
+      <ol class="steps">
+        <li>
+          <h3>Start BYOK in Cortex Gateway</h3>
+          <p>
+            Sign in to Cortex Gateway and activate your tenant.
+            Under <strong>Advanced</strong>, choose <strong>BYOK (Bring Your Own Keys)</strong>,
+            then <strong>Create Tenant and Set Up Keys</strong>.
+          </p>
+          <p class="muted">
+            Initialization can take a few minutes. If you pause, you can continue later with
+            <strong>Set Up Encryption Keys</strong> next to the tenant.
+          </p>
+        </li>
+        <li>
+          <h3>Create your secret key (on your computer)</h3>
+          <p>
+            On the Generate Key screen, create a <strong>32-byte</strong> encryption key.
+            The easiest way with this package:
+          </p>
+<pre><code>./run-byok.sh generate targetkey</code></pre>
+          <p>
+            Then tick <strong>I have a 32-byte symmetric encryption key ready</strong> and continue.
+          </p>
+          <div class="callout warn">
+            <strong>Keep this file safe</strong>
+            Treat <code>targetkey</code> like a password vault root key. Back it up offline.
+            Do not email it, commit it to git, or upload it unwrapped.
+          </div>
+        </li>
+        <li>
+          <h3>Download the wrapping keys from Gateway</h3>
+          <p>
+            On the <strong>Wrap &amp; Upload</strong> screen you will do this twice — once for
+            <strong>Data lake</strong> and once for <strong>Services</strong>.
+          </p>
+          <p>
+            Choose the import method
+            <code>RSA_OAEP_3072_SHA256_AES_256</code> (recommended default),
+            then download each wrapping key (<code>.pem</code> file).
+          </p>
+          <p class="muted">Wrapping keys expire after 3 days. If they expire, download new ones.</p>
+        </li>
+        <li>
+          <h3>Wrap your secret key</h3>
+          <p>
+            Wrapping packages your secret so it can travel safely into Cortex.
+            Place both downloaded <code>.pem</code> files next to the script, then run:
+          </p>
+<pre><code>./run-byok.sh wrap-both \
+  datalake_wrapping_key.pem \
+  services_wrapping_key.pem \
+  targetkey \
+  ./out</code></pre>
+          <p>
+            This creates two files ready to upload:
+            <code>out/datalakewrappedkey</code> and <code>out/serviceswrappedkey</code>.
+          </p>
+          <p class="muted">
+            First-time setup needs a
+            <a href="https://docs.cloud.google.com/kms/docs/configuring-openssl-for-manual-key-wrapping">patched OpenSSL</a>
+            at <code>$HOME/local/bin/openssl.sh</code> (required by the default import method).
+          </p>
+        </li>
+        <li>
+          <h3>Upload and finish</h3>
+          <p>
+            Back in Gateway, upload the Data lake wrapped file, then the Services wrapped file.
+            Click <strong>Complete Activation</strong>.
+          </p>
+          <p class="muted">
+            When activation finishes, your key becomes the primary key for new data stored in the tenant.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Quick checklist</h2>
+      <table>
+        <thead><tr><th>✓</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>☐</td><td>BYOK selected during tenant activation in Cortex Gateway</td></tr>
+          <tr><td>☐</td><td>32-byte <code>targetkey</code> created and stored securely</td></tr>
+          <tr><td>☐</td><td>Data lake wrapping <code>.pem</code> downloaded</td></tr>
+          <tr><td>☐</td><td>Services wrapping <code>.pem</code> downloaded</td></tr>
+          <tr><td>☐</td><td><code>wrap-both</code> run successfully</td></tr>
+          <tr><td>☐</td><td>Both wrapped files uploaded</td></tr>
+          <tr><td>☐</td><td>Complete Activation clicked</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Need more detail?</h2>
+      <p>
+        Official documentation:
+        <a href="https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys">Bring your own keys</a>.
+      </p>
+      <p class="muted" style="margin-bottom:0">
+        This page is a customer-facing walkthrough for the default wrap method.
+        File names such as <code>targetkey</code> and <code>datalake_wrapping_key.pem</code> are practical names used by the helper script;
+        Gateway may show different download names — use the files you downloaded.
+      </p>
+    </section>
+
+    <footer>
+      Helper commands: <code>./run-byok.sh generate</code> · <code>./run-byok.sh wrap-both …</code>
+    </footer>
+  </div>
+</body>
+</html>
