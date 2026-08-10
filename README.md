@@ -1,11 +1,14 @@
 # Bring your own keys (BYOK)
 
 First-time walkthrough for encrypting your Cortex tenant with a key **you** create and control.  
-You work in [Cortex Gateway](https://apps.paloaltonetworks.com/) and on your computer.
+You work in Cortex Gateway and on your computer.
 
 > Styled companion page (local / offline): [`README.html`](./README.html)
 
-Official docs: [Bring your own keys — Cortex Docs](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
+**Start here (Palo Alto Networks):**  
+[Bring your own keys](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys) ·
+[Activate Cortex XSIAM](https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant) ·
+[Cortex XSIAM onboarding checklist](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist)
 
 ## What this means for you
 
@@ -15,7 +18,8 @@ Your tenant needs encryption for two areas: the **Data lake** and other **Servic
 You can use **one** key for both, or create **two** different keys. Most customers start with one shared key.
 
 > [!NOTE]
-> You create the secret **32-byte target key**. Cortex Gateway gives you temporary **wrapping keys** (`.pem` files). Wrapping keys only protect your secret during upload — they are **not** your BYOK key.
+> You create the secret **32-byte target key**. Cortex Gateway gives you temporary **wrapping keys** (`.pem` files). Wrapping keys only protect your secret during upload — they are **not** your BYOK key.  
+> Details: [Bring your own keys — architecture & setup](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
 
 | Item | Who | What to do |
 | --- | --- | --- |
@@ -71,6 +75,14 @@ Under **Advanced**, select **BYOK (Bring Your Own Keys)**, then **Create Tenant 
 
 Initialization can take a few minutes. If you pause, continue later with **Set Up Encryption Keys** next to the tenant.
 
+**Learn more (Palo Alto Networks):**
+
+- [Activate a tenant (Gateway guide)](https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant)
+- [Activate Cortex XSIAM tenant](https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant)
+- [Activate Cortex XSIAM — Administrator Guide](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Activate-Cortex-XSIAM)
+- [Cortex XSIAM supported regions](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/cortex-xsiam-supported-regions)
+- [Set up new tenant with BYOK](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
+
 ### 2. Create your 32-byte target key
 
 On your computer:
@@ -84,6 +96,8 @@ In Gateway, select **I have a 32-byte symmetric encryption key ready** and conti
 > [!CAUTION]
 > Treat `targetkey` like a root secret. Back it up offline. Do not email it, store it in git, or upload it unwrapped.
 
+**Learn more:** [BYOK setup — Generate Key](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys) (32-byte symmetric encryption key requirement)
+
 ### 3. Download wrapping keys
 
 On the **Wrap & Upload** screen, repeat for **Data lake** and **Services**:
@@ -93,6 +107,11 @@ On the **Wrap & Upload** screen, repeat for **Data lake** and **Services**:
 
 > [!NOTE]
 > Wrapping keys expire after three days. If they expire, download new ones before wrapping.
+
+**Learn more:**
+
+- [Wrap & Upload — import methods and wrapping key](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
+- Same topic in the Administrator Guide: [Bring your own keys](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Bring-your-own-keys)
 
 ### 4. Wrap your target key
 
@@ -111,7 +130,13 @@ Output:
 - `out/datalakewrappedkey`
 - `out/serviceswrappedkey`
 
-The default import method needs [patched OpenSSL](https://docs.cloud.google.com/kms/docs/configuring-openssl-for-manual-key-wrapping) at `$HOME/local/bin/openssl.sh` (or set `OPENSSL_SH`).
+The default import method (`RSA_OAEP_*_SHA256_AES_256`) needs patched OpenSSL at `$HOME/local/bin/openssl.sh` (or set `OPENSSL_SH`).
+
+**Learn more:**
+
+- OpenSSL wrap procedure in PANW docs: [Bring your own keys — wrap procedure](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
+- Linked from PANW docs: [Configuring OpenSSL for manual key wrapping (Google Cloud)](https://docs.cloud.google.com/kms/docs/configuring-openssl-for-manual-key-wrapping)
+- Linked from PANW docs: [Wrapping a key using OpenSSL (Google Cloud)](https://docs.cloud.google.com/kms/docs/wrapping-a-key)
 
 ### 5. Upload and complete activation
 
@@ -119,6 +144,12 @@ Upload the Data lake wrapped file, then the Services wrapped file.
 Click **Complete Activation**.
 
 Your key becomes the primary encryption key for newly generated tenant data.
+
+**Learn more:**
+
+- [Complete Activation / key import](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys)
+- Later operations (rotate / disable): same page — *Rotate encryption keys* and *Disable encryption keys*
+- Broader onboarding context: [Cortex XSIAM onboarding checklist](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist)
 
 ## Checklist
 
@@ -140,3 +171,15 @@ Your key becomes the primary encryption key for newly generated tenant data.
 
 > [!NOTE]
 > File names such as `targetkey` and `datalake_wrapping_key.pem` are helper-script conventions. Use the wrapping files you download from Gateway, even if their names differ.
+
+## Further reading (Palo Alto Networks)
+
+| Topic | Documentation |
+| --- | --- |
+| BYOK overview, wrap, rotate, disable | [Bring your own keys](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/bring-your-own-keys) |
+| BYOK (Administrator Guide mirror) | [Bring your own keys — Cortex XSIAM 3.x](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Bring-your-own-keys) |
+| Tenant activation & encryption method | [Activate Cortex XSIAM](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Activate-Cortex-XSIAM) |
+| Activate XSIAM from Gateway | [Activate Cortex XSIAM tenant](https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant/activate-cortex-xsiam-tenant) |
+| Gateway activation hub | [Activate a tenant](https://cortex-docs.paloaltonetworks.com/gateway-guide/activate-a-tenant) |
+| Deployment checklist (includes BYOK) | [Cortex XSIAM onboarding checklist](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-3.x-Documentation/Cortex-XSIAM-onboarding-checklist) |
+| Hosting regions | [Cortex XSIAM supported regions](https://cortex-docs.paloaltonetworks.com/cortex-xsiam/onboard-cortex-xsiam/deployment-steps/activate-cortex-xsiam/cortex-xsiam-supported-regions) |
